@@ -23,9 +23,24 @@ namespace Snakes
         public int Fat { set { fat = value; } get { return fat; } }
         public string Type { set { type = value; } get { return type; } }
         public PictureBox AApple { set { apple = value; } get { return apple; } }
-        public void Rearesh()
+        public void Rearesh(PictureBox[] snake, int fat)
         {
-            apple.Location = new Point(rand.Next(0, 20) * 25 + 5, rand.Next(0, 20) * 25 + 5);
+            bool c = false;
+            int x = 0;
+            int y = 0;
+            while (c == false)
+            {
+                x = rand.Next(0, 20) * 25 + 5;
+                y = rand.Next(0, 20) * 25 + 5;
+                for (int i = 0; i <= fat; i++)
+                {
+                    if (x == snake[i].Location.X && y == snake[i].Location.Y)
+                        break;
+                    if (i == fat)
+                        c = true;
+                }
+            }
+            apple.Location = new Point(x, y);
             fat = 1;
             if (rand.Next(0, 5) == 4)
             {

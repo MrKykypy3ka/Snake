@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Snakes
 {
@@ -9,6 +10,8 @@ namespace Snakes
         private string direction;
         private Snake snake;
         private Apple apple;
+        private int tic;
+        SoundPlayer sp = new SoundPlayer("www.wav");
 
         public Form1()
         {
@@ -37,6 +40,7 @@ namespace Snakes
             map.Image = Image.FromFile("Map.png");
             Board.Image = Image.FromFile("Board.png");
             Board.SizeMode = PictureBoxSizeMode.Zoom;
+            sp.Play();
         }
         private new void KeyPress(object sender, KeyEventArgs e)
         {
@@ -46,7 +50,7 @@ namespace Snakes
         private void eat()
         {
             snake.eat(apple.Fat, apple.Type);
-            apple.Rearesh();
+            apple.Rearesh(snake.IImages, snake.Fat);
             this.Controls.Add(snake.IImages[snake.Fat]);
             snake.IImages[snake.Fat].BringToFront();
             snake.IImages[snake.Fat].Parent = map;
@@ -63,6 +67,12 @@ namespace Snakes
             snake.go(direction);
             if (snake.deathorlive() == false)
                 endgame();
+            tic += timer1.Interval;
+            if (tic > 181000)
+            {
+                tic = 0;
+                sp.Play();
+            }
         }
         private void endgame()
         {
