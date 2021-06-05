@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Snakes.Properties {
+namespace Snake.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

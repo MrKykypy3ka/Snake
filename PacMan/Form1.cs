@@ -6,9 +6,9 @@ namespace Snakes
 {
     public partial class Form1 : Form
     {
-        string direction;
-        Snake snake;
-        Apple apple;
+        private string direction;
+        private Snake snake;
+        private Apple apple;
 
         public Form1()
         {
@@ -26,55 +26,43 @@ namespace Snakes
             direction = "Right";
             this.KeyUp += new KeyEventHandler(KeyPress);
             this.Controls.Add(snake.IImages[0]);
-            snake.IImages[0].Show();
+            this.Controls.Add(apple.AApple);
             timer1.Interval = snake.Speed;
             timer1.Start();
             snake.IImages[0].BringToFront();
-            food.Image = Image.FromFile("apple1.ico");
-            map.Image = Image.FromFile("Map.bmp");
+            snake.IImages[0].Parent = map;
+            apple.AApple.Parent = map;
+            snake.IImages[0].BackColor = Color.Transparent;
+            apple.AApple.BackColor = Color.Transparent;
+            map.Image = Image.FromFile("Map.png");
+            Board.Image = Image.FromFile("Board.png");
+            Board.SizeMode = PictureBoxSizeMode.Zoom;
         }
         private new void KeyPress(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode.ToString())
-            {
-                case "Right":
-                    if (direction != "Left")
-                        direction = "Right";
-                    break;
-                case "Left":
-                    if (direction != "Right")
-                        direction = "Left";
-                    break;
-                case "Up":
-                    if (direction != "Down")
-                        direction = "Up";
-                    break;
-                case "Down":
-                    if (direction != "Up")
-                        direction = "Down";
-                    break;
-            }
+            if ((e.KeyCode.ToString() == "Right" || e.KeyCode.ToString() == "Left" || e.KeyCode.ToString() == "Up" || e.KeyCode.ToString() == "Down"))
+                direction = e.KeyCode.ToString();
         }
         private void eat()
         {
-            if (snake.IImages[0].Location == food.Location)
-            {
-                food.Location = apple.Rearesh();
-                food.Image = Image.FromFile(apple.Face);
-                snake.eat(apple.Fat, apple.Type);
-                this.Controls.Add(snake.IImages[snake.Fat]);
-                snake.IImages[snake.Fat].BringToFront();
-                timer1.Interval = snake.Speed;
-            }
+            apple.Rearesh();
+            snake.eat(apple.Fat, apple.Type);
+            this.Controls.Add(snake.IImages[snake.Fat]);
+            snake.IImages[snake.Fat].BringToFront();
+            snake.IImages[snake.Fat].Parent = map;
+            snake.IImages[snake.Fat].BackColor = Color.Transparent;
+            snake.IImages[0].BringToFront();
+            timer1.Interval = snake.Speed;
+            label2.Text = snake.Fat.ToString();
+            label4.Text = (((snake.Speed - 500) * (-1))/50).ToString();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            eat();
+            if (snake.IImages[0].Location == apple.AApple.Location)
+                eat();
             snake.go(direction);
             if (snake.deathorlive() == false)
                 endgame();
-            label2.Text = snake.Fat.ToString();
-            GC.Collect();
         }
         private void endgame()
         {

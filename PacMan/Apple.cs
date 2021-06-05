@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snakes
 {
@@ -7,32 +8,33 @@ namespace Snakes
     {
         private string type;
         private int fat;
-        private int posX;
-        private int posY;
-        private string face;
         Random rand = new Random();
+        private PictureBox apple = new PictureBox();
         public Apple()
         {
+            apple = new PictureBox();
+            apple.Location = new Point(205, 205);
+            apple.Size = new Size(25, 25);
+            apple.Image = Image.FromFile("apple1.ico");
+            apple.SizeMode = PictureBoxSizeMode.Zoom;
         }
-        public string Face { set { face = value; } get { return face; } }
         public int Fat { set { fat = value; } get { return fat; } }
         public string Type { set { type = value; } get { return type; } }
-        public Point Rearesh()
+        public PictureBox AApple { set { apple = value; } get { return apple; } }
+        public void Rearesh()
         {
-            posX = rand.Next(0, 20) * 25 + 5;
-            posY = rand.Next(0, 20) * 25 + 5;
+            apple.Location = new Point(rand.Next(0, 20) * 25 + 5, rand.Next(0, 20) * 25 + 5);
             fat = 1;
             if (rand.Next(0, 5) == 4)
             {
                 type = "s";
-                face = "apple2.ico";
+                apple.Image = Image.FromFile("apple2.png");
             }
             else
             {
                 type = "";
-                face = "apple1.ico";
+                apple.Image = Image.FromFile("apple1.ico");
             }
-            return new Point(posX, posY);
         }
 
     }
