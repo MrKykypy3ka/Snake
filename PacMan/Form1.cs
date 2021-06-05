@@ -45,8 +45,8 @@ namespace Snakes
         }
         private void eat()
         {
-            apple.Rearesh();
             snake.eat(apple.Fat, apple.Type);
+            apple.Rearesh();
             this.Controls.Add(snake.IImages[snake.Fat]);
             snake.IImages[snake.Fat].BringToFront();
             snake.IImages[snake.Fat].Parent = map;

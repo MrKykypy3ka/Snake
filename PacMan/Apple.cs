@@ -17,6 +17,8 @@ namespace Snakes
             apple.Size = new Size(25, 25);
             apple.Image = Image.FromFile("apple1.ico");
             apple.SizeMode = PictureBoxSizeMode.Zoom;
+            fat = 1;
+            type = "";
         }
         public int Fat { set { fat = value; } get { return fat; } }
         public string Type { set { type = value; } get { return type; } }
